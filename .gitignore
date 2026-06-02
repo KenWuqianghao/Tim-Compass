@@ -1,0 +1,4 @@
+node_modules/
+dist/
+.codex-shots/
+.DS_Store
