@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.next/
 .codex-shots/
 .DS_Store
 .vercel
