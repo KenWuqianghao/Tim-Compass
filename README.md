@@ -23,4 +23,3 @@ Open the local URL on a phone. Location and compass sensors require a secure con
 - OpenStreetMap sources are only used as a fallback if the bundled dataset cannot produce a match.
 - Compass heading is smoothed to reduce sensor jitter while rotating.
 - The arrival animation triggers within 75 meters.
-- The Demo button exercises the compass and celebration without GPS.

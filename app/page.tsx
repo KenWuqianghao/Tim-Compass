@@ -229,39 +229,6 @@ export default function Home() {
     );
   }, [handlePosition]);
 
-  const startDemo = useCallback(() => {
-    const demoUser = {
-      accuracy: 18,
-      lat: 43.6531,
-      lon: -79.3839,
-    };
-    const demoTarget = {
-      distance: 52,
-      id: "demo",
-      lat: 43.65335,
-      lon: -79.38336,
-      name: "Tim Hortons",
-      source: "demo",
-    };
-
-    lastLookupRef.current = { at: Date.now(), user: demoUser };
-    setUser(demoUser);
-    setTarget(demoTarget);
-    rawHeadingRef.current = 300;
-    headingRef.current = 300;
-    setHeading(300);
-    setStatus("Demo mode: moving close to arrival.");
-
-    window.setTimeout(() => {
-      setUser({
-        ...demoUser,
-        lat: 43.65332,
-        lon: -79.38339,
-      });
-      setStatus("You made it.");
-    }, 2200);
-  }, []);
-
   useEffect(() => {
     function handleOrientation(event: DeviceOrientationEventWithCompass) {
       let nextHeading: number | null = null;
@@ -372,9 +339,6 @@ export default function Home() {
         <section className="actions" aria-label="Controls">
           <button className="primary-button" disabled={isLocating} onClick={startLocation} type="button">
             {isLocating ? "Locating..." : "Use my location"}
-          </button>
-          <button className="secondary-button" onClick={startDemo} type="button">
-            Demo
           </button>
         </section>
 

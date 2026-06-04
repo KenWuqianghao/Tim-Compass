@@ -89,8 +89,7 @@ h1 {
 }
 
 .icon-button:active,
-.primary-button:active,
-.secondary-button:active {
+.primary-button:active {
   transform: translateY(1px);
 }
 
@@ -252,18 +251,12 @@ h1 {
 
 .actions {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-}
-
-.primary-button,
-.secondary-button {
-  min-height: 50px;
-  border-radius: 8px;
-  font-weight: 850;
 }
 
 .primary-button {
+  min-height: 50px;
+  border-radius: 8px;
+  font-weight: 850;
   background: var(--tim-red);
   color: white;
   box-shadow: 0 12px 28px rgba(200, 16, 46, 0.28);
@@ -272,13 +265,6 @@ h1 {
 .primary-button:disabled {
   cursor: wait;
   opacity: 0.7;
-}
-
-.secondary-button {
-  min-width: 88px;
-  padding: 0 16px;
-  border: 1px solid var(--line);
-  background: rgba(255, 250, 242, 0.76);
 }
 
 .status {
