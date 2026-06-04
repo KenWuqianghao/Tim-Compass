@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { isArrived } from "../lib/arrival";
 
 type LatLon = {
   lat: number;
@@ -23,7 +24,6 @@ type DeviceOrientationEventWithCompass = DeviceOrientationEvent & {
   webkitCompassHeading?: number;
 };
 
-const ARRIVAL_DISTANCE_METERS = 75;
 const TARGET_REFRESH_DISTANCE_METERS = 250;
 const TARGET_REFRESH_MS = 90_000;
 const HEADING_DEADBAND_DEGREES = 0.7;
@@ -134,8 +134,7 @@ export default function Home() {
       relativeBearing: normalizeDegrees(bearing - heading),
     };
   }, [heading, target, user]);
-  const isCelebrating =
-    metrics.distance !== undefined && metrics.distance <= ARRIVAL_DISTANCE_METERS;
+  const isCelebrating = isArrived(metrics.distance, user?.accuracy);
 
   const refreshTarget = useCallback(async (nextUser: UserLocation) => {
     targetRequestRef.current?.abort();

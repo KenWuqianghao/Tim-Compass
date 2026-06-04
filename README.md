@@ -22,4 +22,4 @@ Open the local URL on a phone. Location and compass sensors require a secure con
 - Nearby Tim Hortons locations are loaded from a bundled dataset generated from official Tim Hortons location pages.
 - OpenStreetMap sources are only used as a fallback if the bundled dataset cannot produce a match.
 - Compass heading is smoothed to reduce sensor jitter while rotating.
-- The arrival animation triggers within 75 meters.
+- The arrival animation triggers within 25 meters when GPS accuracy is reasonable.
