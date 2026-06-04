@@ -9,13 +9,18 @@ npm install
 npm run dev
 ```
 
+To refresh the bundled Tim Hortons dataset:
+
+```bash
+npm run data:tim
+```
+
 Open the local URL on a phone. Location and compass sensors require a secure context; `localhost` works for desktop testing, while phones usually need HTTPS or a local tunneling setup.
 
 ## Notes
 
-- To match Google Maps results, set `GOOGLE_PLACES_API_KEY` with a Google Places API (New) key. The app keeps the key server-side in the Next.js API route.
-- Nearby Tim Hortons locations are loaded by a Next.js API route from OpenStreetMap through Overpass.
-- If no Google key is configured, the API falls back to official Tim Hortons pages when coordinates are available, then OpenStreetMap sources.
+- Nearby Tim Hortons locations are loaded from a bundled dataset generated from official Tim Hortons location pages.
+- OpenStreetMap sources are only used as a fallback if the bundled dataset cannot produce a match.
 - Compass heading is smoothed to reduce sensor jitter while rotating.
 - The arrival animation triggers within 75 meters.
 - The Demo button exercises the compass and celebration without GPS.

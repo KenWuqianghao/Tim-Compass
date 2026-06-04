@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import timDataset from "../../../data/tim-hortons.json";
 
 export const runtime = "nodejs";
 
@@ -12,7 +13,27 @@ type TimLocation = LatLon & {
   distance: number;
   id: string;
   name: string;
-  source: "google" | "official" | "nominatim" | "overpass";
+  source: "official" | "nominatim" | "overpass";
+};
+
+type TimDatasetLocation = LatLon & {
+  address: string;
+  city: string;
+  country: string;
+  id: string;
+  name: string;
+  phone: string;
+  postalCode: string;
+  province: string;
+  sourceUrl: string;
+  streetAddress: string;
+};
+
+type TimDataset = {
+  count: number;
+  generatedAt: string;
+  locations: TimDatasetLocation[];
+  source: string;
 };
 
 type OverpassElement = {
@@ -38,18 +59,6 @@ type ReverseGeocode = {
     state?: string;
     town?: string;
     village?: string;
-  };
-};
-
-type GooglePlace = {
-  displayName?: {
-    text?: string;
-  };
-  formattedAddress?: string;
-  id: string;
-  location?: {
-    latitude?: number;
-    longitude?: number;
   };
 };
 
@@ -155,57 +164,27 @@ async function reverseGeocode(user: LatLon) {
   };
 }
 
-async function findWithGooglePlaces(user: LatLon) {
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) return null;
+const officialDataset = timDataset as TimDataset;
 
-  const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
-    body: JSON.stringify({
-      locationBias: {
-        circle: {
-          center: {
-            latitude: user.lat,
-            longitude: user.lon,
-          },
-          radius: 10000,
-        },
-      },
-      textQuery: "Tim Hortons",
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      "X-Goog-Api-Key": apiKey,
-      "X-Goog-FieldMask": "places.id,places.displayName,places.formattedAddress,places.location",
-    },
-    method: "POST",
-    signal: AbortSignal.timeout(7000),
-  });
+function findWithLocalDataset(user: LatLon) {
+  let nearest: TimLocation | null = null;
 
-  if (!response.ok) return null;
-
-  const payload = (await response.json()) as { places?: GooglePlace[] };
-  const candidates = (payload.places ?? [])
-    .map((place): TimLocation | null => {
-      const lat = place.location?.latitude;
-      const lon = place.location?.longitude;
-      if (typeof lat !== "number" || typeof lon !== "number") return null;
-      const name = place.displayName?.text || "Tim Hortons";
-      if (!/tim\s*hortons/i.test(name)) return null;
-      const point = { lat, lon };
-
-      return {
-        ...point,
-        address: place.formattedAddress,
-        distance: distanceMeters(user, point),
-        id: `google/${place.id}`,
-        name,
-        source: "google",
+  for (const location of officialDataset.locations) {
+    const distance = distanceMeters(user, location);
+    if (!nearest || distance < nearest.distance) {
+      nearest = {
+        address: location.address,
+        distance,
+        id: location.id,
+        lat: location.lat,
+        lon: location.lon,
+        name: location.name || "Tim Hortons",
+        source: "official",
       };
-    })
-    .filter((place): place is TimLocation => place !== null)
-    .sort((a, b) => a.distance - b.distance);
+    }
+  }
 
-  return candidates[0] ?? null;
+  return nearest;
 }
 
 function parseOfficialLocations(html: string, user: LatLon) {
@@ -406,7 +385,7 @@ export async function GET(request: Request) {
   try {
     const user = { lat, lon };
     const location =
-      (await findWithGooglePlaces(user)) ??
+      findWithLocalDataset(user) ??
       (await findWithOfficialLocator(user)) ??
       (await findWithOverpass(user)) ??
       (await findWithNominatim(user));
