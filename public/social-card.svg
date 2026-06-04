@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Tim Compass social preview">
+  <defs>
+    <radialGradient id="warm" cx="50%" cy="0%" r="80%">
+      <stop offset="0" stop-color="#fffaf2"/>
+      <stop offset=".52" stop-color="#f7f0e8"/>
+      <stop offset="1" stop-color="#ebe8df"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#211914" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#warm)"/>
+  <g transform="translate(760 315)" filter="url(#shadow)">
+    <circle r="190" fill="#fffaf2" stroke="#211914" stroke-opacity=".12" stroke-width="8"/>
+    <circle r="120" fill="none" stroke="#211914" stroke-opacity=".10" stroke-width="5"/>
+    <circle r="62" fill="none" stroke="#211914" stroke-opacity=".08" stroke-width="4"/>
+    <path d="M0-168 34-20 0-44-34-20 0-168z" fill="#c8102e"/>
+    <path d="M0 168-34 20 0 44 34 20 0 168z" fill="#246a8f"/>
+    <circle r="44" fill="#f7f0e8" stroke="#211914" stroke-opacity=".12" stroke-width="12"/>
+    <circle r="12" fill="#fff"/>
+    <text x="0" y="-132" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#c8102e">N</text>
+    <text x="150" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="900" fill="#7f6e61">E</text>
+    <text x="-150" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="900" fill="#7f6e61">W</text>
+  </g>
+  <g transform="translate(92 110)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="34" font-weight="900" fill="#7f6e61">TIM COMPASS</text>
+    <text x="0" y="100" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#211914">Find the nearest</text>
+    <text x="0" y="188" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#211914">Tim Hortons</text>
+    <text x="0" y="270" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#115d47">A tiny mobile compass for your next Tims run.</text>
+    <g transform="translate(0 345)">
+      <rect width="255" height="58" rx="12" fill="#c8102e"/>
+      <text x="128" y="39" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="900" fill="#fffaf2">tim-compass</text>
+    </g>
+  </g>
+  <g transform="translate(1060 92)" opacity=".8">
+    <path d="M0-42 8-12 36-29 24 3 58 10 24 22 39 52 8 39 0 74-8 39-39 52-24 22-58 10-24 3-36-29-8-12z" fill="#dd1f2d"/>
+  </g>
+</svg>
